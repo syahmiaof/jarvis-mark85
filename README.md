@@ -2,6 +2,10 @@
 
 <div align="center">
 
+<img src="preview.png" alt="J.A.R.V.I.S. Mark 85 Holographic HUD Preview" width="100%" style="border-radius: 8px; box-shadow: 0 0 30px rgba(0,245,255,0.3);" />
+
+<br/><br/>
+
 ![JARVIS Banner](https://img.shields.io/badge/J.A.R.V.I.S.-MARK%2085-00f5ff?style=for-the-badge&logo=probot&logoColor=white)
 ![Architect](https://img.shields.io/badge/ARCHITECT-SYAHMI-ff6600?style=for-the-badge)
 ![License](https://img.shields.io/badge/COST-RM%200.00%20FREE-00ff88?style=for-the-badge)
