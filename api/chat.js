@@ -45,7 +45,7 @@ export default async function handler(req, res) {
           { role: 'system', content: "You are J.A.R.V.I.S. built by Boss Syahmi." },
           { role: 'user', content: "Hello" }
         ],
-        max_tokens: max_tokens || 120,
+        max_tokens: max_tokens || 350,
       }),
     });
 
