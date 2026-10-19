@@ -481,6 +481,87 @@
             background: #030712;
             color: #fff;
         }
+
+        /* MOBILE RESPONSIVE TACTICAL ADAPTATION */
+        @media (max-width: 860px) {
+            body {
+                height: auto;
+                min-height: 100vh;
+                overflow-y: auto;
+            }
+            header {
+                padding: 0 16px;
+                height: 56px;
+            }
+            .brand-title {
+                font-size: 15px;
+                letter-spacing: 2px;
+            }
+            .brand-badge {
+                font-size: 8px;
+                padding: 2px 6px;
+            }
+            .header-meta {
+                gap: 8px;
+                font-size: 11px;
+            }
+            .clock-tag {
+                font-size: 14px;
+            }
+            main {
+                grid-template-columns: 1fr;
+                padding: 16px;
+                gap: 20px;
+            }
+            .reactor-disc-wrap {
+                width: 250px;
+                height: 250px;
+            }
+            #reactor-canvas {
+                width: 250px;
+                height: 250px;
+            }
+            .plasma-core {
+                width: 130px;
+                height: 130px;
+            }
+            .core-state-label {
+                font-size: 13px;
+            }
+            .core-sub-label {
+                font-size: 9px;
+            }
+            .comm-stage {
+                height: 300px;
+                max-height: 300px;
+            }
+            footer {
+                height: auto;
+                flex-direction: column;
+                padding: 16px;
+                gap: 12px;
+            }
+            .input-bar-wrap {
+                width: 100%;
+                max-width: 100%;
+            }
+            .controls-row {
+                width: 100%;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 8px;
+            }
+            .fn-btn {
+                font-size: 10px;
+                padding: 7px 11px;
+            }
+            .model-select {
+                font-size: 10px;
+                padding: 7px 10px;
+                width: 100%;
+                text-align: center;
+            }
+        }
     </style>
 </head>
 <body>
@@ -870,15 +951,44 @@
             }
             window.speechSynthesis.cancel();
             const utter = new SpeechSynthesisUtterance(text);
-            utter.lang = 'en-GB';
+            
+            const voices = window.speechSynthesis.getVoices();
+            if (currentLang === 'ms-MY') {
+                utter.lang = 'ms-MY';
+                const malayVoice = voices.find(v => v.lang.startsWith('ms') || v.lang.startsWith('id'));
+                if (malayVoice) utter.voice = malayVoice;
+            } else {
+                utter.lang = 'en-GB';
+                const ukVoice = voices.find(v => v.lang === 'en-GB' || v.name.includes('UK') || v.name.includes('British') || v.name.includes('Ryan'));
+                if (ukVoice) utter.voice = ukVoice;
+            }
             utter.rate = 1.05;
             utter.onend = () => {
                 isSpeaking = false;
                 updateCoreUI();
                 if (isHandsFree) setTimeout(startListening, 350);
             };
+            utter.onerror = () => {
+                isSpeaking = false;
+                updateCoreUI();
+                if (isHandsFree) setTimeout(startListening, 350);
+            };
+            window.currentUtterance = utter;
             window.speechSynthesis.speak(utter);
         }
+
+        // Mobile touch & click audio unlocker
+        function primeAudio() {
+            if ('speechSynthesis' in window) {
+                const u = new SpeechSynthesisUtterance('');
+                u.volume = 0;
+                window.speechSynthesis.speak(u);
+            }
+            document.removeEventListener('touchstart', primeAudio);
+            document.removeEventListener('click', primeAudio);
+        }
+        document.addEventListener('touchstart', primeAudio, { passive: true });
+        document.addEventListener('click', primeAudio);
 
         // EVENT LISTENERS
         reactorWrap.addEventListener('click', () => {
