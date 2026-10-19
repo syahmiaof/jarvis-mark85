@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>J.A.R.V.I.S. // Minimalist Mark 85 — Architect: Syahmi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cyan: #00f5ff;
+            --cyan-glow: rgba(0, 245, 255, 0.6);
+            --orange: #ff6600;
+            --orange-bright: #ff9100;
+            --orange-glow: rgba(255, 102, 0, 0.7);
+            --green: #00ff88;
+            --green-glow: rgba(0, 255, 136, 0.6);
+            --bg-deep: #040813;
+            --panel-bg: rgba(6, 14, 28, 0.78);
+            --panel-border: rgba(0, 245, 255, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            background: radial-gradient(circle at center, #0a172e 0%, #040813 65%, #02040a 100%);
+            color: #fff;
+            font-family: 'Rajdhani', sans-serif;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Subtle ambient grid */
+        .ambient-grid {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(0, 245, 255, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 245, 255, 0.025) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* TOP MINIMALIST HEADER */
+        header {
+            position: relative;
+            z-index: 10;
+            height: 65px;
+            padding: 0 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(0, 245, 255, 0.15);
+            background: rgba(3, 7, 16, 0.85);
+            backdrop-filter: blur(12px);
+        }
+
+        .brand-wrap {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .brand-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 18px;
+            font-weight: 900;
+            letter-spacing: 3px;
+            color: #fff;
+            text-shadow: 0 0 12px var(--cyan-glow);
+        }
+
+        .brand-badge {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--orange-bright);
+            letter-spacing: 1.5px;
+            padding: 3px 10px;
+            border: 1px solid var(--orange);
+            background: rgba(255, 102, 0, 0.1);
+            border-radius: 2px;
+        }
+
+        .header-meta {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .status-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--green);
+            box-shadow: 0 0 8px var(--green);
+            margin-right: 6px;
+        }
+
+        .clock-tag {
+            font-family: 'Orbitron', monospace;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--cyan);
+            letter-spacing: 2px;
+        }
+
+        /* MAIN TWO-COLUMN STAGE */
+        main {
+            position: relative;
+            z-index: 5;
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 440px;
+            padding: 25px 40px;
+            gap: 35px;
+            align-items: center;
+        }
+
+        /* LEFT: HERO MINIMALIST ARC REACTOR */
+        .reactor-stage {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .reactor-disc-wrap {
+            position: relative;
+            width: 320px;
+            height: 320px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        #reactor-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        /* Inner Glowing Plasma Sun Button */
+        .plasma-core {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #fff3c4 0%, #ff8800 35%, #ff4400 70%, rgba(180, 20, 0, 0.8) 100%);
+            box-shadow: 
+                0 0 35px var(--orange-glow), 
+                0 0 70px var(--orange),
+                inset 0 0 25px #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 12px;
+            transition: all 0.25s ease;
+            position: relative;
+            z-index: 5;
+            border: 3px solid #ffcc66;
+        }
+
+        .plasma-core.listening {
+            background: radial-gradient(circle, #d4ffea 0%, #00ff88 35%, #009955 70%, rgba(0, 80, 40, 0.8) 100%);
+            border-color: #88ffbb;
+            box-shadow: 
+                0 0 40px var(--green-glow), 
+                0 0 85px var(--green),
+                inset 0 0 25px #ffffff;
+        }
+
+        .plasma-core.speaking {
+            background: radial-gradient(circle, #e0f9ff 0%, #00f5ff 35%, #0077aa 70%, rgba(0, 40, 90, 0.8) 100%);
+            border-color: #88eeff;
+            box-shadow: 
+                0 0 40px var(--cyan-glow), 
+                0 0 85px var(--cyan),
+                inset 0 0 25px #ffffff;
+        }
+
+        .plasma-core.thinking {
+            background: radial-gradient(circle, #fff0bb 0%, #ffaa00 35%, #cc6600 70%, rgba(120, 50, 0, 0.8) 100%);
+            border-color: #ffcc44;
+            box-shadow: 
+                0 0 40px var(--orange-glow), 
+                0 0 85px var(--orange),
+                inset 0 0 25px #ffffff;
+        }
+
+        .plasma-core:hover {
+            transform: scale(1.05);
+        }
+
+        .core-state-label {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 16px;
+            font-weight: 900;
+            color: #030712;
+            letter-spacing: 2px;
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+        }
+
+        .core-sub-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: #2b0c00;
+            letter-spacing: 1px;
+            margin-top: 3px;
+        }
+
+        /* Pulsing Wave when listening */
+        .pulse-wave {
+            position: absolute;
+            inset: -20px;
+            border-radius: 50%;
+            border: 2px solid var(--green);
+            opacity: 0;
+            pointer-events: none;
+            display: none;
+            animation: pulse-out 1.6s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+        }
+
+        @keyframes pulse-out {
+            0% { transform: scale(0.85); opacity: 0.9; }
+            100% { transform: scale(1.35); opacity: 0; }
+        }
+
+        /* Live Speech Transcript Box */
+        .live-transcript-wrap {
+            margin-top: 25px;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 520px;
+        }
+
+        .live-transcript-pill {
+            background: rgba(0, 245, 255, 0.08);
+            border: 1px solid rgba(0, 245, 255, 0.3);
+            border-radius: 20px;
+            padding: 8px 22px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 14px;
+            color: var(--cyan);
+            letter-spacing: 1px;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(0, 245, 255, 0.15);
+            transition: all 0.2s ease;
+        }
+
+        .live-transcript-pill.speaking {
+            border-color: var(--green);
+            color: #fff;
+            box-shadow: 0 0 20px var(--green-glow);
+        }
+
+        /* RIGHT: CLEAN HOLOGRAPHIC COMM LOG */
+        .comm-stage {
+            height: 100%;
+            max-height: 480px;
+            background: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 8px;
+            backdrop-filter: blur(14px);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(0, 245, 255, 0.08);
+        }
+
+        .comm-header {
+            padding: 12px 18px;
+            border-bottom: 1px solid rgba(0, 245, 255, 0.15);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 245, 255, 0.04);
+        }
+
+        .comm-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            color: #fff;
+        }
+
+        .comm-auth {
+            font-size: 11px;
+            color: var(--orange-bright);
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .comm-feed {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 13px;
+        }
+
+        .msg-bubble {
+            padding: 10px 14px;
+            border-radius: 4px;
+            line-height: 1.45;
+            position: relative;
+        }
+
+        .msg-meta {
+            font-size: 10px;
+            letter-spacing: 1.5px;
+            margin-bottom: 4px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+        }
+
+        .msg-user {
+            background: rgba(255, 102, 0, 0.12);
+            border-left: 3px solid var(--orange-bright);
+            color: #fff;
+            align-self: flex-end;
+            max-width: 90%;
+        }
+
+        .msg-user .msg-meta {
+            color: var(--orange-bright);
+        }
+
+        .msg-jarvis {
+            background: rgba(0, 245, 255, 0.08);
+            border-left: 3px solid var(--cyan);
+            color: #e0f9ff;
+            align-self: flex-start;
+            max-width: 95%;
+        }
+
+        .msg-jarvis .msg-meta {
+            color: var(--cyan);
+        }
+
+        /* BOTTOM FUNCTIONAL DECK */
+        footer {
+            position: relative;
+            z-index: 10;
+            height: 95px;
+            background: rgba(3, 7, 16, 0.95);
+            border-top: 1px solid rgba(0, 245, 255, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            gap: 20px;
+        }
+
+        .input-bar-wrap {
+            flex: 1;
+            max-width: 650px;
+            display: flex;
+            align-items: center;
+            background: rgba(0, 245, 255, 0.06);
+            border: 1px solid rgba(0, 245, 255, 0.25);
+            border-radius: 6px;
+            padding: 6px 14px;
+            transition: all 0.2s ease;
+        }
+
+        .input-bar-wrap:focus-within {
+            border-color: var(--cyan);
+            box-shadow: 0 0 15px var(--cyan-glow);
+            background: rgba(0, 245, 255, 0.1);
+        }
+
+        .cmd-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #fff;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 14px;
+        }
+
+        .cmd-input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .send-btn {
+            background: linear-gradient(135deg, var(--cyan) 0%, #00a2ff 100%);
+            border: none;
+            color: #030712;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            padding: 8px 18px;
+            border-radius: 4px;
+            cursor: pointer;
+            box-shadow: 0 0 12px var(--cyan-glow);
+            transition: all 0.2s ease;
+        }
+
+        .send-btn:hover {
+            transform: scale(1.04);
+            filter: brightness(1.2);
+        }
+
+        /* Functional Button Row */
+        .controls-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .fn-btn {
+            background: rgba(0, 245, 255, 0.08);
+            border: 1px solid rgba(0, 245, 255, 0.3);
+            color: var(--cyan);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            padding: 9px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            transition: all 0.2s ease;
+        }
+
+        .fn-btn:hover {
+            background: rgba(0, 245, 255, 0.2);
+            box-shadow: 0 0 12px var(--cyan-glow);
+        }
+
+        .fn-btn.active {
+            border-color: var(--orange-bright);
+            color: var(--orange-bright);
+            background: rgba(255, 102, 0, 0.15);
+            box-shadow: 0 0 15px var(--orange-glow);
+        }
+
+        .model-select {
+            background: rgba(5, 12, 24, 0.95);
+            border: 1px solid rgba(0, 245, 255, 0.3);
+            color: var(--cyan);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            padding: 8px 12px;
+            border-radius: 4px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .model-select option {
+            background: #030712;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="ambient-grid"></div>
+
+    <!-- HEADER -->
+    <header>
+        <div class="brand-wrap">
+            <div class="brand-title">J.A.R.V.I.S.</div>
+            <div class="brand-badge">👑 DEVELOPED BY SYAHMI</div>
+        </div>
+        <div class="header-meta">
+            <div><span class="status-dot"></span>QUANTUM MATRIX // RM 0.00</div>
+            <div class="clock-tag" id="clock-display">00:00:00</div>
+        </div>
+    </header>
+
+    <!-- MAIN INTERACTIVE STAGE -->
+    <main>
+        <!-- LEFT: CLEAN ARC REACTOR BUTTON -->
+        <div class="reactor-stage">
+            <div class="reactor-disc-wrap" id="reactor-wrap">
+                <canvas id="reactor-canvas" width="320" height="320"></canvas>
+                <div class="pulse-wave" id="pulse-wave"></div>
+                <div class="plasma-core" id="plasma-core">
+                    <div class="core-state-label" id="core-state-label">STANDBY</div>
+                    <div class="core-sub-label" id="core-sub-label">CLICK TO TALK</div>
+                </div>
+            </div>
+
+            <div class="live-transcript-wrap">
+                <div class="live-transcript-pill" id="live-transcript">
+                    🎙️ Listening standby. Tap the Arc Reactor to begin.
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT: MINIMALIST COMM LOG -->
+        <div class="comm-stage">
+            <div class="comm-header">
+                <span class="comm-title">HOLOGRAPHIC COMM LOG</span>
+                <span class="comm-auth">AUTH: BOSS SYAHMI</span>
+            </div>
+            <div class="comm-feed" id="comm-feed">
+                <div class="msg-bubble msg-jarvis">
+                    <div class="msg-meta">J.A.R.V.I.S. // INITIALIZED</div>
+                    Greetings, Boss Syahmi. Quantum voice recognition and neural audio synthesis are ready. I am listening.
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER FUNCTIONAL CONTROLS -->
+    <footer>
+        <div class="input-bar-wrap">
+            <input type="text" class="cmd-input" id="cmd-input" placeholder="Type a command or speak into your microphone..." autocomplete="off">
+            <button class="send-btn" id="send-btn">⚡ SEND</button>
+        </div>
+
+        <div class="controls-row">
+            <button class="fn-btn active" id="handsfree-btn">
+                🎙️ <span>HANDS-FREE: ON</span>
+            </button>
+            <button class="fn-btn" id="lang-btn">
+                🌐 <span id="lang-label">MIC: BM (MELAYU)</span>
+            </button>
+            <button class="fn-btn" id="test-audio-btn">
+                🔊 <span>TEST VOICE</span>
+            </button>
+            <select class="model-select" id="model-select">
+                <option value="openrouter/minimax/minimax-m3.1-flash:free">OpenRouter: MiniMax M3.1 (Free)</option>
+                <option value="openrouter/free">OpenRouter: Auto Free Model</option>
+                <option value="llama3.2:1b">Local Laptop: Llama 3.2 1B (Fastest)</option>
+            </select>
+        </div>
+    </footer>
+
+    <script>
+        // Redirect file:// to http://127.0.0.1:8001/hud so browser remembers mic permission permanently
+        if (window.location.protocol === 'file:') {
+            window.location.replace('http://127.0.0.1:8001/hud');
+        }
+
+        const API_BASE = (window.location.protocol === 'http:' || window.location.protocol === 'https:') 
+            ? window.location.origin 
+            : 'http://127.0.0.1:8001';
+
+        // State
+        let isHandsFree = true;
+        let isListening = false;
+        let isThinking = false;
+        let isSpeaking = false;
+        let currentLang = 'ms-MY'; // Default to Bahasa Melayu for best local transcription!
+        let recognition = null;
+        let activeAudio = null;
+        let silenceTimer = null;
+        let speechBuffer = '';
+
+        // UI Elements
+        const reactorWrap = document.getElementById('reactor-wrap');
+        const plasmaCore = document.getElementById('plasma-core');
+        const coreStateLabel = document.getElementById('core-state-label');
+        const coreSubLabel = document.getElementById('core-sub-label');
+        const pulseWave = document.getElementById('pulse-wave');
+        const liveTranscript = document.getElementById('live-transcript');
+        const commFeed = document.getElementById('comm-feed');
+        const cmdInput = document.getElementById('cmd-input');
+        const sendBtn = document.getElementById('send-btn');
+        const handsfreeBtn = document.getElementById('handsfree-btn');
+        const langBtn = document.getElementById('lang-btn');
+        const langLabel = document.getElementById('lang-label');
+        const testAudioBtn = document.getElementById('test-audio-btn');
+        const modelSelect = document.getElementById('model-select');
+        const clockDisplay = document.getElementById('clock-display');
+
+        // Clock Update
+        function updateClock() {
+            const d = new Date();
+            clockDisplay.textContent = d.toTimeString().split(' ')[0];
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Canvas Minimalist Arc Reactor Animation
+        const canvas = document.getElementById('reactor-canvas');
+        const ctx = canvas.getContext('2d');
+        let angle = 0;
+
+        function drawReactor() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const cx = canvas.width / 2;
+            const cy = canvas.height / 2;
+            angle += 0.01;
+
+            // Outer cyan rotating bracket ring
+            ctx.save();
+            ctx.translate(cx, cy);
+            ctx.rotate(angle);
+
+            ctx.strokeStyle = isListening ? 'rgba(0, 255, 136, 0.8)' : 'rgba(0, 245, 255, 0.8)';
+            ctx.lineWidth = 3;
+            ctx.shadowColor = isListening ? '#00ff88' : '#00f5ff';
+            ctx.shadowBlur = 12;
+
+            // 3 segmented curved brackets
+            for (let i = 0; i < 3; i++) {
+                ctx.beginPath();
+                ctx.arc(0, 0, 145, (i * Math.PI * 2) / 3, (i * Math.PI * 2) / 3 + 1.2);
+                ctx.stroke();
+            }
+
+            // Inner dashed amber-orange ring
+            ctx.restore();
+            ctx.save();
+            ctx.translate(cx, cy);
+            ctx.rotate(-angle * 1.5);
+
+            ctx.strokeStyle = 'rgba(255, 102, 0, 0.85)';
+            ctx.lineWidth = 2;
+            ctx.shadowColor = '#ff6600';
+            ctx.shadowBlur = 10;
+            ctx.setLineDash([8, 12]);
+
+            ctx.beginPath();
+            ctx.arc(0, 0, 115, 0, Math.PI * 2);
+            ctx.stroke();
+
+            ctx.restore();
+            requestAnimationFrame(drawReactor);
+        }
+        drawReactor();
+
+        // Speech Recognition Setup (NO concurrent getUserMedia to prevent mic hardware lock!)
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+        function initSpeechRecognition() {
+            if (!SpeechRecognition) {
+                liveTranscript.textContent = "SpeechRecognition not supported in this browser. Please use Chrome or Edge.";
+                return;
+            }
+
+            recognition = new SpeechRecognition();
+            recognition.continuous = true;
+            recognition.interimResults = true;
+            recognition.maxAlternatives = 1;
+            recognition.lang = currentLang;
+
+            recognition.onstart = () => {
+                isListening = true;
+                updateCoreUI();
+            };
+
+            recognition.onresult = (event) => {
+                if (isSpeaking || isThinking) return;
+
+                let interim = '';
+                for (let i = event.resultIndex; i < event.results.length; i++) {
+                    const text = event.results[i][0].transcript;
+                    if (event.results[i].isFinal) {
+                        speechBuffer += ' ' + text;
+                    } else {
+                        interim += text;
+                    }
+                }
+
+                const currentSpoken = (speechBuffer + ' ' + interim).trim();
+                if (currentSpoken.length > 0) {
+                    liveTranscript.textContent = `🗣️ "${currentSpoken}"`;
+                    liveTranscript.classList.add('speaking');
+
+                    // FAIL-SAFE SILENCE TIMER:
+                    // If user pauses for 1.2s, automatically execute command!
+                    // This eliminates waiting forever for browser isFinal event!
+                    clearTimeout(silenceTimer);
+                    silenceTimer = setTimeout(() => {
+                        const finalQuery = currentSpoken;
+                        speechBuffer = '';
+                        executeCommand(finalQuery);
+                    }, 1200);
+                }
+            };
+
+            recognition.onerror = (e) => {
+                if (e.error === 'not-allowed') {
+                    liveTranscript.textContent = '❌ Microphone access blocked. Please click Allow in your browser.';
+                    isListening = false;
+                    updateCoreUI();
+                } else if (e.error !== 'no-speech') {
+                    console.warn('Speech recognition error:', e.error);
+                }
+            };
+
+            recognition.onend = () => {
+                isListening = false;
+                updateCoreUI();
+                if (isHandsFree && !isSpeaking && !isThinking) {
+                    setTimeout(() => {
+                        startListening();
+                    }, 350);
+                }
+            };
+        }
+
+        function startListening() {
+            if (!recognition || isSpeaking || isThinking) return;
+            try {
+                recognition.start();
+            } catch (e) {
+                // Already running
+            }
+        }
+
+        function stopListening() {
+            if (!recognition) return;
+            try {
+                recognition.stop();
+            } catch (e) {}
+        }
+
+        function updateCoreUI() {
+            plasmaCore.className = 'plasma-core';
+
+            if (isThinking) {
+                plasmaCore.classList.add('thinking');
+                coreStateLabel.textContent = 'THINKING';
+                coreSubLabel.textContent = 'NEURAL QUERY';
+                pulseWave.style.display = 'none';
+            } else if (isSpeaking) {
+                plasmaCore.classList.add('speaking');
+                coreStateLabel.textContent = 'SPEAKING';
+                coreSubLabel.textContent = 'VOCALIZING';
+                pulseWave.style.display = 'none';
+            } else if (isListening) {
+                plasmaCore.classList.add('listening');
+                coreStateLabel.textContent = 'LISTENING';
+                coreSubLabel.textContent = 'SPEAK FREELY';
+                pulseWave.style.display = 'block';
+            } else {
+                coreStateLabel.textContent = 'STANDBY';
+                coreSubLabel.textContent = 'CLICK TO TALK';
+                pulseWave.style.display = 'none';
+            }
+        }
+
+        function addMessage(sender, text) {
+            const time = new Date().toTimeString().split(' ')[0];
+            const div = document.createElement('div');
+            div.className = `msg-bubble ${sender === 'JARVIS' ? 'msg-jarvis' : 'msg-user'}`;
+            const meta = sender === 'JARVIS' ? `J.A.R.V.I.S. // ${time} // FOR SYAHMI` : `BOSS SYAHMI // ${time}`;
+            div.innerHTML = `<div class="msg-meta">${meta}</div>${text}`;
+            commFeed.appendChild(div);
+            commFeed.scrollTop = commFeed.scrollHeight;
+        }
+
+        async function executeCommand(query) {
+            if (!query.trim() || isThinking || isSpeaking) return;
+            clearTimeout(silenceTimer);
+            isThinking = true;
+            stopListening();
+            updateCoreUI();
+
+            addMessage('USER', query);
+            liveTranscript.textContent = `⚡ Processing command: "${query}"`;
+            liveTranscript.classList.remove('speaking');
+
+            const selectedModel = modelSelect.value;
+
+            try {
+                const resp = await fetch(`${API_BASE}/v1/chat/completions`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        model: selectedModel,
+                        messages: [
+                            {
+                                role: 'system',
+                                content: "You are J.A.R.V.I.S., the legendary British AI assistant built and engineered by Boss Syahmi. Address the user as 'Boss Syahmi' or 'sir'. Speak with supreme polish, wit, and brevity. Keep spoken replies to 1 or 2 concise sentences. If the user speaks Malay, reply in charismatic British-accented Malay or witty English. Always prioritize Boss Syahmi."
+                            },
+                            { role: 'user', content: query }
+                        ],
+                        max_tokens: 120,
+                        stream: false
+                    })
+                });
+
+                if (resp.ok) {
+                    const data = await resp.json();
+                    const reply = data.choices[0].message.content.trim();
+                    speakText(reply);
+                } else {
+                    speakText("At your service, Boss Syahmi. Recalibrating neural matrix.");
+                }
+            } catch (err) {
+                console.error('Fetch error:', err);
+                speakText("All local neural systems are intact, Boss Syahmi. Ready for your next command.");
+            } finally {
+                isThinking = false;
+                updateCoreUI();
+            }
+        }
+
+        function speakText(text) {
+            isSpeaking = true;
+            updateCoreUI();
+            addMessage('JARVIS', text);
+            liveTranscript.textContent = `🔊 J.A.R.V.I.S.: "${text}"`;
+
+            if (activeAudio) {
+                try { activeAudio.pause(); } catch(e){}
+                activeAudio = null;
+            }
+
+            // Stream authentic British Microsoft Ryan Neural MP3 audio
+            const ttsUrl = `${API_BASE}/hud/tts?text=${encodeURIComponent(text)}`;
+            const audio = new Audio(ttsUrl);
+            activeAudio = audio;
+
+            audio.onplay = () => {
+                isSpeaking = true;
+                updateCoreUI();
+            };
+
+            audio.onended = () => {
+                isSpeaking = false;
+                activeAudio = null;
+                updateCoreUI();
+                liveTranscript.textContent = '🎙️ Listening... Speak anytime.';
+                if (isHandsFree) {
+                    setTimeout(startListening, 350);
+                }
+            };
+
+            audio.onerror = () => {
+                fallbackSpeechSynth(text);
+            };
+
+            audio.play().catch(() => {
+                fallbackSpeechSynth(text);
+            });
+        }
+
+        function fallbackSpeechSynth(text) {
+            if (!('speechSynthesis' in window)) {
+                isSpeaking = false;
+                updateCoreUI();
+                return;
+            }
+            window.speechSynthesis.cancel();
+            const utter = new SpeechSynthesisUtterance(text);
+            utter.lang = 'en-GB';
+            utter.rate = 1.05;
+            utter.onend = () => {
+                isSpeaking = false;
+                updateCoreUI();
+                if (isHandsFree) setTimeout(startListening, 350);
+            };
+            window.speechSynthesis.speak(utter);
+        }
+
+        // EVENT LISTENERS
+        reactorWrap.addEventListener('click', () => {
+            if (isSpeaking) {
+                if (activeAudio) { activeAudio.pause(); activeAudio = null; }
+                if (window.speechSynthesis) window.speechSynthesis.cancel();
+                isSpeaking = false;
+                updateCoreUI();
+            } else if (!isListening && !isThinking) {
+                speechBuffer = '';
+                startListening();
+                liveTranscript.textContent = '🎙️ Listening... Speak now.';
+            } else if (isListening) {
+                stopListening();
+                liveTranscript.textContent = '⏸️ Standby. Click to speak.';
+            }
+        });
+
+        sendBtn.addEventListener('click', () => {
+            const query = cmdInput.value.trim();
+            if (query) {
+                cmdInput.value = '';
+                executeCommand(query);
+            }
+        });
+
+        cmdInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const query = cmdInput.value.trim();
+                if (query) {
+                    cmdInput.value = '';
+                    executeCommand(query);
+                }
+            }
+        });
+
+        handsfreeBtn.addEventListener('click', () => {
+            isHandsFree = !isHandsFree;
+            handsfreeBtn.classList.toggle('active', isHandsFree);
+            handsfreeBtn.querySelector('span').textContent = `HANDS-FREE: ${isHandsFree ? 'ON' : 'OFF'}`;
+            if (isHandsFree) {
+                startListening();
+            } else {
+                stopListening();
+            }
+        });
+
+        langBtn.addEventListener('click', () => {
+            if (currentLang === 'ms-MY') {
+                currentLang = 'en-US';
+                langLabel.textContent = 'MIC: EN (ENGLISH)';
+            } else {
+                currentLang = 'ms-MY';
+                langLabel.textContent = 'MIC: BM (MELAYU)';
+            }
+            if (recognition) {
+                recognition.lang = currentLang;
+                if (isListening) {
+                    stopListening();
+                    setTimeout(startListening, 200);
+                }
+            }
+        });
+
+        testAudioBtn.addEventListener('click', () => {
+            speakText("Audio output is fully operational, Boss Syahmi. Loud and clear.");
+        });
+
+        // Initialize Speech Recognition on load
+        window.addEventListener('load', () => {
+            initSpeechRecognition();
+            // Start listening automatically after small delay
+            setTimeout(() => {
+                if (isHandsFree) {
+                    startListening();
+                }
+            }, 500);
+        });
+    </script>
+</body>
+</html>

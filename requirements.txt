@@ -1,0 +1,6 @@
+requests>=2.31.0
+numpy>=1.26.0
+sounddevice>=0.4.6
+SpeechRecognition>=3.10.0
+edge-tts>=6.1.10
+pygame>=2.5.0
