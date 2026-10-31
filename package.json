@@ -1,0 +1,21 @@
+{
+  "name": "jarvis-mark85",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Iron Man Mark 85 Arc Reactor Holographic HUD with Real-time Voice & AI Integration",
+  "type": "module",
+  "scripts": {
+    "lint": "node --check api/chat.js",
+    "check": "node --check api/chat.js",
+    "test": "node --check api/chat.js"
+  },
+  "keywords": [
+    "jarvis",
+    "iron-man",
+    "hud",
+    "ai",
+    "openrouter"
+  ],
+  "author": "Muhammad Syahmi (syahmiaof)",
+  "license": "MIT"
+}
